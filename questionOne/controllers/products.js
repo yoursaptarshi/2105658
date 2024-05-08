@@ -2,10 +2,11 @@ const axios = require('axios');
 
 exports.getProductsInCategory = async (req, res) => {
     try {
+        console.log(0)
         const { categoryname, companyname } = req.params;
         const n = req.query.n || 10;
-        const minPrice = req.query.minPrice;
-        const maxPrice = req.query.maxPrice;
+        const minPrice = req.query.minPrice||0;
+        const maxPrice = req.query.maxPrice||Infinity;
         const currentPage = req.query.page || 1;
 
         const bearerToken = process.env.BEARER;
@@ -18,8 +19,8 @@ exports.getProductsInCategory = async (req, res) => {
         };
         console.log(1);
         const response = await axios.get(`http://20.244.56.144/test/companies/${companyname}/categories/${categoryname}/products?top=1000000000&minPrice=1&maxPrice=1000000`,config);
-        
-        const allProducts = response.data.products;
+        console.log(2)
+        const allProducts = response.data;
 
         
         let filteredProducts = allProducts.filter(product => {
